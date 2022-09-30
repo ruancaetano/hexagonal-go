@@ -21,26 +21,6 @@ type ProductInterface interface {
 	GetPrice() float64
 }
 
-type ProductReaderInterface interface {
-	Get(id string) (ProductInterface, error)
-}
-
-type ProductWriterInterface interface {
-	Save(product ProductInterface) (ProductInterface, error)
-}
-
-type ProductPersistenceInterface interface {
-	ProductReaderInterface
-	ProductWriterInterface
-}
-
-type ProductServiceInterface interface {
-	Get(id string) (ProductInterface, error)
-	Create(name string, price float64) (ProductInterface, error)
-	Enable(product ProductInterface) (ProductInterface, error)
-	Disable(product ProductInterface) (ProductInterface, error)
-}
-
 const (
 	DISABLED = "disabled"
 	ENABLED  = "enabled"

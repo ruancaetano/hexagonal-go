@@ -1,7 +1,33 @@
 package application
 
+type ProductReaderInterface interface {
+	Get(id string) (ProductInterface, error)
+}
+
+type ProductWriterInterface interface {
+	Save(product ProductInterface) (ProductInterface, error)
+}
+
+type ProductPersistenceInterface interface {
+	ProductReaderInterface
+	ProductWriterInterface
+}
+
+type ProductServiceInterface interface {
+	Get(id string) (ProductInterface, error)
+	Create(name string, price float64) (ProductInterface, error)
+	Enable(product ProductInterface) (ProductInterface, error)
+	Disable(product ProductInterface) (ProductInterface, error)
+}
+
 type ProductService struct {
 	Persistence ProductPersistenceInterface
+}
+
+func NewProductService(persistence ProductPersistenceInterface) *ProductService {
+	return &ProductService{
+		Persistence: persistence,
+	}
 }
 
 func (s *ProductService) Get(id string) (ProductInterface, error) {
