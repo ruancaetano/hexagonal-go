@@ -61,7 +61,7 @@ func TestProductDb_Get(t *testing.T) {
 	require.Equal(t, "1", product.GetID())
 }
 
-func TestProductDb_Sav(t *testing.T) {
+func TestProductDb_Save(t *testing.T) {
 	setUp()
 	defer Db.Close()
 

@@ -2,6 +2,7 @@ package db
 
 import (
 	"database/sql"
+	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/ruancaetano/hexagonal-go/application"
@@ -35,7 +36,14 @@ func (p *ProductDb) Get(id string) (application.ProductInterface, error) {
 func (p *ProductDb) Save(product application.ProductInterface) (application.ProductInterface, error) {
 	var rows int
 
-	p.db.QueryRow("select id from products where id=?", product.GetID()).Scan(&rows)
+	fmt.Println(product.GetID())
+
+	err := p.db.QueryRow("select count(id) from products where id=?", product.GetID()).Scan(&rows)
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println(rows)
 
 	if rows == 0 {
 		return p.create(product)
@@ -65,7 +73,7 @@ func (p *ProductDb) update(product application.ProductInterface) (application.Pr
 		return nil, err
 	}
 
-	_, err = stmt.Exec(product.GetName(), product.GetPrice(), product.GetStatus, product.GetID())
+	_, err = stmt.Exec(product.GetName(), product.GetPrice(), product.GetStatus(), product.GetID())
 
 	if err != nil {
 		return nil, err
