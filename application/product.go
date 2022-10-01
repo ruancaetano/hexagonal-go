@@ -27,10 +27,10 @@ const (
 )
 
 type Product struct {
-	ID     string  `valid:"uuidv4"`
-	Name   string  `valid:"required"`
-	Status string  `valid:"required"`
-	Price  float64 `valid:"float,optional"`
+	ID     string  `valid:"uuidv4" json:"id"`
+	Name   string  `valid:"required" json:"name"`
+	Status string  `valid:"required" json:"status"`
+	Price  float64 `valid:"float,optional" json:"price"`
 }
 
 func NewProduct() *Product {
